@@ -1,15 +1,15 @@
-import { createStackNavigator } from '@react-navigation/stack'
-import React from 'react'
-import HomeScreen from '../screens/HomeScreen'
+/* import {createStackNavigator} from '@react-navigation/stack';
+import React from 'react';
+import CameraScreen from '../screens/CameraScreen';
+import CartScreen from '../screens/CartScreen';
+import HomeScreen from '../screens/HomeScreen';
 
+const Stack = createStackNavigator();
 
-const Stack = createStackNavigator()
-
-export default function RootNavigation() {
-    return (
-        <Stack.Navigator>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Cart" component={CartScreen} />            
-         </Stack.Navigator>
-    )
-}
+export default function StackNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+    </Stack.Navigator>
+  );
+} */
