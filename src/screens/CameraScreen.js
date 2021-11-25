@@ -1,14 +1,19 @@
-import { Button, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableOpacityBase, View } from "react-native";
-import React, { useRef, useState } from 'react'
-import { RNCamera } from "react-native-camera";
-import {fonts,  colors } from "../constants/index"
-import { useDispatch, useSelector } from "react-redux";
-import { ADD_TO_CART } from "../redux/actionTypes";
-import addToCart from "../redux/actions"
-import { Switch } from "react-native-gesture-handler";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {RNCamera} from 'react-native-camera';
+import {fonts, colors} from '../constants/index';
+import {useDispatch, useSelector} from 'react-redux';
+import {ADD_TO_CART} from '../redux/actionTypes';
+import {Switch} from 'react-native-gesture-handler';
 
-export default function CameraScreen(){
-/* 
+export default function CameraScreen() {
+  /* 
   const [items, setItems] = useState([])
 const [camera, setCamera] = useState(false)
 
@@ -18,23 +23,19 @@ const [camera, setCamera] = useState(false)
 const handleAddData = (id)=>{
  dispatch(addToCart(id))
 }
- */  
-const dispatch = useDispatch()
+ */
+  const dispatch = useDispatch();
 
-const cartItems = useSelector((state)=>state.cart)
+  const [barcode, setBarcode] = useState('');
 
-const [barcode, setBarcode] = useState('')
+  const ref = useRef();
 
-const ref = useRef()
+  const handleSetBarcode = data => {
+    setBarcode(data);
+  };
 
-const handleSetBarcode = (data)=>{
+  const addToCart = item => dispatch({type: ADD_TO_CART, payload: item});
 
-  setBarcode(data)
-
-}
-
-
-const addToCart = item => dispatch({type: ADD_TO_CART,payload:item})
 
   return (
     <ScrollView>
@@ -48,29 +49,26 @@ const addToCart = item => dispatch({type: ADD_TO_CART,payload:item})
         }}
       />
 
+  {/* <TouchableOpacity onPress={() => setCamera(!camera)}>
+        <Text style={(styles.text, {color: colors.dark_sea_green})}>
+          Kamera
+        </Text>
+      </TouchableOpacity> 
+  */}
+      <Switch />
 
-
-     {/*    <TouchableOpacity onPress={() => setCamera(!camera)}>
-          <Text style={(styles.text, {color: colors.dark_sea_green})}>
-            Kamera
-         </Text>
-        </TouchableOpacity> */}
-        <Switch />
-      
-     <RNCamera
+      <RNCamera
         style={styles.camera}
         ref={ref}
         captureAudio={false}
         onBarCodeRead={e => handleSetBarcode(e.data)}
-          androidCameraPermissionOptions={{
-            title: 'Permission to use camera',
-            message: 'We need your permission to use your camera',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
-          
-      
-      />  
+        androidCameraPermissionOptions={{
+          title: 'Permission to use camera',
+          message: 'We need your permission to use your camera',
+          buttonPositive: 'Ok',
+          buttonNegative: 'Cancel',
+        }}
+      />
       <View>
         <Text style={[styles.text, {color: colors.dim_grey}]}>{barcode}</Text>
       </View>
@@ -82,53 +80,46 @@ const addToCart = item => dispatch({type: ADD_TO_CART,payload:item})
           </Text>
         </TouchableOpacity>
       </View>
-
-   
-
-     
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  camera:{
+  camera: {
     flex: 1,
     padding: 10,
     height: 200,
     width: 90,
     margin: 15,
     alignSelf: 'center',
-    
-    
   },
-  text:{
-    fontSize:fonts.f15,
-    fontWeight:"bold",
-    textAlign:"center",
-    color:colors.dark_salmon,
-    margin:5,
-    padding:2
+  text: {
+    fontSize: fonts.f15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: colors.dark_salmon,
+    margin: 5,
+    padding: 2,
   },
-  touchableContainer:{
-    borderWidth:1,
-    borderRadius:7,
-    borderColor:colors.dark_sea_green,
-    width:150,
-    alignSelf:"center",
-    alignItems:"center",
-    padding:5,
-    margin:5,
-    marginTop:15
+  touchableContainer: {
+    borderWidth: 1,
+    borderRadius: 7,
+    borderColor: colors.dark_sea_green,
+    width: 150,
+    alignSelf: 'center',
+    alignItems: 'center',
+    padding: 5,
+    margin: 5,
+    marginTop: 15,
   },
-  cartContainer:{
-    borderWidth:1,
-    borderColor:colors.dark_sea_green,
-    borderRadius:4,
-    padding:5,
-    width:300,
-    minHeight:50,
-    alignSelf:"center",
-    alignItems:"flex-start"
-
-  }
-})
+  cartContainer: {
+    borderWidth: 1,
+    borderColor: colors.dark_sea_green,
+    borderRadius: 4,
+    padding: 5,
+    width: 300,
+    minHeight: 50,
+    alignSelf: 'center',
+    alignItems: 'flex-start',
+  },
+});

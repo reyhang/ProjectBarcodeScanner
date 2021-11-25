@@ -4,7 +4,7 @@ import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons"
 import { colors } from '../../constants'
 
 
-export default function TabBarIcon  ({name,color})  {
+export default function IonIcon  ({name,color})  {
 
     return <Icon name={name} color={color} size={23} />
 }
@@ -20,8 +20,8 @@ const RemoveIcon = ({name,color}) => {
 
 }
 
-const CartIcon = ({size,color}) => {
-    return <MaterialIcon name="shopping" color={color} size={size} />
+const MatIcon = ({name,size,color}) => {
+    return <MaterialIcon name={name} color={color} size={size} />
 }
 
-export {PlusIcon,RemoveIcon,CartIcon}
+export {PlusIcon,RemoveIcon,MatIcon}

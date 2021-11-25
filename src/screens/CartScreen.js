@@ -10,30 +10,29 @@ import {
 
 import {useDispatch, useSelector} from 'react-redux';
 import {REMOVE_FROM_CART} from '../redux/actionTypes';
-import TabBarIcon, { CartIcon } from '../components/Icons';
-import { colors } from '../constants';
+import IonIcon, { MatIcon} from '../components/Icons';
+import {colors} from '../constants';
 
 export default function CartScreen() {
+  
+  const dispatch = useDispatch()
 
- 
   const cartItems = useSelector(state => state.cart);
 
-  
+  const removeFromCart = payload => {
+    dispatch({type: REMOVE_FROM_CART, payload});
+  };
+
+
   function Seperator() {
     return <View style={{borderBottomWidth: 1, borderBottomColor: '#a9a9'}} />;
   }
 
   return (
-    <View style={styles.container}>      
-
+    <View style={styles.container}>
       {cartItems.length === 0 ? (
-        <View
-          style={{
-            marginTop: 100,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <CartIcon size={50} color={colors.light_grey} />
+        <View style={styles.cart}>
+          <MatIcon name="shopping" size={50} color={colors.light_grey} />
           <Text>Sepetinizde Ürün Bulunmamaktadır.</Text>
         </View>
       ) : (
@@ -44,11 +43,13 @@ export default function CartScreen() {
           ItemSeparatorComponent={() => Seperator()}
           renderItem={({item}) => (
             <View style={styles.bookItemContainer}>
-
-                <Text style={styles.bookTitle}> {item} </Text>
-               
-
-            
+              <Text style={styles.bookTitle}>{item}
+              </Text>
+              <View style={styles.touchable} >
+                <TouchableOpacity  onPress={() => removeFromCart(item)}>
+                  <IonIcon  name="trash-outline" size={18} color={colors.dark_salmon} />
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         />
@@ -58,6 +59,23 @@ export default function CartScreen() {
 }
 
 const styles = StyleSheet.create({
+  cart: {
+    marginTop: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin:15,
+    padding:75,
+    borderWidth:1,
+    borderColor:colors.dark_sea_green,
+    borderRadius:7,
+
+  },
+  touchable:{
+    marginTop:3,
+    marginLeft:350,
+    position: "absolute",
+    
+  },
   text: {
     color: '#ffd2c9',
     fontSize: 45,
@@ -68,43 +86,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    margin:1
+    margin: 1,
   },
   bookItemContainer: {
     flexDirection: 'row',
     padding: 5,
     paddingLeft: 10,
   },
-  thumbnail: {
-    width: 100,
-    height: 150,
-  },
   bookTitle: {
     fontSize: 22,
     fontWeight: '400',
     color: 'black',
   },
-  authorText: {
-    fontSize: 18,
-    fontWeight: '300',
-    color: 'black',
-  },
-  button: {
-    backgroundColor: '#a5285144',
-    fontSize: 15,
-    height: 25,
-    width: 100,
-    textAlign: 'center',
-    borderRadius: 10,
-    color: 'white',
-  },
-  buttonText: {
-    fontSize: 22,
-    fontWeight: '300',
-  },
-  buttonContainer: {
-    position: 'absolute',
-    top: 110,
-    left: 10,
-  },
+
 });
