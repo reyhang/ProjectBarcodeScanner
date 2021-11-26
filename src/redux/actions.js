@@ -1,16 +1,54 @@
-import {ADD_TO_CART, REMOVE_FROM_CART, REMOVE_ALL_CART, ADD_QUANTITY, SUB_QUANTITY} from './actionTypes';
+import {useSelector} from 'react-redux';
+import {ADD_OR_REMOVE_CART} from './actionTypes';
 
-const addToCart = payload => dispatch => dispatch[{type: ADD_TO_CART, payload}];
+//item : ürünler
 
-const removeFromCart = payload => dispatch =>
- dispatch[{type: REMOVE_FROM_CART, payload}];
+const addOrRemoveCart = ({item, cartItems, status}) => {
+  let xa = [];
 
-const removeAllCart = payload => dispatch => dispatch[{type: REMOVE_ALL_CART, payload}];
+  const checkCart = cartItems.find(res => res.title === item);
+  
+  if (status) {
+    if (checkCart) {
+      const filterCart = cartItems.filter(res => res.title !== item);
+      xa = [
+        ...filterCart,
+        {
+          id: checkCart.id,
+          count: checkCart.count + 1,
+          title: checkCart.title,
+        },
+      ];
+    } else {
+      xa = [
+        ...cartItems,
+        {
+          title: item,
+          count: 1,
+          id: Math.floor(Math.random() * 150),
+        },
+      ];
+    }
+  } else {
+      if (checkCart.count > 1) {
+        const filterCart = cartItems.filter(res => res.title !== item);
+      xa = [
+        ...filterCart,
+        {
+          id: checkCart.id,
+          count: checkCart.count - 1,
+          title: checkCart.title,
+        },
+      ];
+      } else {
+        const filterCart = cartItems.filter(res => res.title !== item);
+          xa= [...filterCart]
+      }
+  }
 
-const addQuantity = payload => dispatch => dispatch[{type: ADD_QUANTITY,payload}];
+  return dispatch => dispatch({type: ADD_OR_REMOVE_CART, payload: xa});
+};
 
-const subQuantity = payload => dispatch => dispatch[{type:SUB_QUANTITY}];
-
-export {addToCart, removeFromCart, removeAllCart,addQuantity,subQuantity};
+export {addOrRemoveCart};
 
 /*  payload = State'e güncellenecek data  */

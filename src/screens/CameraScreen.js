@@ -9,8 +9,8 @@ import React, {useRef, useState} from 'react';
 import {RNCamera} from 'react-native-camera';
 import {fonts, colors} from '../constants/index';
 import {useDispatch, useSelector} from 'react-redux';
-import {ADD_TO_CART} from '../redux/actionTypes';
 import {Switch} from 'react-native-gesture-handler';
+import {addOrRemoveCart} from "../redux/actions"
 
 export default function CameraScreen() {
   /* 
@@ -24,6 +24,7 @@ const handleAddData = (id)=>{
  dispatch(addToCart(id))
 }
  */
+
   const dispatch = useDispatch();
 
   const [barcode, setBarcode] = useState('');
@@ -34,8 +35,9 @@ const handleAddData = (id)=>{
     setBarcode(data);
   };
 
-  const addToCart = item => dispatch({type: ADD_TO_CART, payload: item});
+const cartItems = useSelector(state => state.cart)
 
+const handleAddCart = item => dispatch(addOrRemoveCart({item,cartItems,status:true}));
 
   return (
     <ScrollView>
@@ -74,7 +76,7 @@ const handleAddData = (id)=>{
       </View>
 
       <View style={styles.touchableContainer}>
-        <TouchableOpacity onPress={() => addToCart(barcode)}>
+        <TouchableOpacity onPress={() => handleAddCart(barcode)}>
           <Text style={(styles.text, {color: colors.dark_sea_green})}>
             Ürünü Sepete Ekle
           </Text>

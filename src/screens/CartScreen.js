@@ -7,11 +7,12 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {REMOVE_FROM_CART} from '../redux/actionTypes';
 import IonIcon, { MatIcon} from '../components/Icons';
 import {colors} from '../constants';
+import { addOrRemoveCart } from '../redux/actions';
 
 export default function CartScreen() {
   
@@ -19,19 +20,17 @@ export default function CartScreen() {
 
   const cartItems = useSelector(state => state.cart);
 
-  const removeFromCart = payload => {
-    dispatch({type: REMOVE_FROM_CART, payload});
-  };
-
-
-  function Seperator() {
+/*   function Seperator() {
     return <View style={{borderBottomWidth: 1, borderBottomColor: '#a9a9'}} />;
-  }
+  } */
+
+
+  const handleRemoveData = item => dispatch(addOrRemoveCart({item,cartItems,status:false}))
 
   return (
     <View style={styles.container}>
       {cartItems.length === 0 ? (
-        <View style={styles.cart}>
+        <View style={styles.noCart}>
           <MatIcon name="shopping" size={50} color={colors.light_grey} />
           <Text>Sepetinizde Ürün Bulunmamaktadır.</Text>
         </View>
@@ -40,17 +39,30 @@ export default function CartScreen() {
           showsVerticalScrollIndicator={false}
           data={cartItems}
           keyExtractor={item => item.id}
-          ItemSeparatorComponent={() => Seperator()}
           renderItem={({item}) => (
-            <View style={styles.bookItemContainer}>
-              <Text style={styles.bookTitle}>{item}
-              </Text>
-              <View style={styles.touchable} >
-                <TouchableOpacity  onPress={() => removeFromCart(item)}>
-                  <IonIcon  name="trash-outline" size={18} color={colors.dark_salmon} />
-                </TouchableOpacity>
-              </View>
-            </View>
+            <SafeAreaView style={styles.cart}>
+              <View style={styles.cart2}>
+       
+              
+
+                <View>
+                  <Text style={styles.cartText}>{item.title}</Text>
+                </View>
+                <View style={styles.countContainer}>
+                  <Text style={styles.cartText}>{item.count}</Text>
+                </View>
+                <View style={styles.touchable}>
+                  <TouchableOpacity
+                    onPress={() => handleRemoveData(item.title)}>
+                    <IonIcon
+                      name="trash-outline"
+                      size={18}
+                      color={colors.dark_salmon}
+                    />
+                  </TouchableOpacity>
+
+              </View></View>
+            </SafeAreaView>
           )}
         />
       )}
@@ -59,7 +71,7 @@ export default function CartScreen() {
 }
 
 const styles = StyleSheet.create({
-  cart: {
+  noCart: {
     marginTop: 100,
     justifyContent: 'center',
     alignItems: 'center',
@@ -70,10 +82,31 @@ const styles = StyleSheet.create({
     borderRadius:7,
 
   },
+  cart:{
+    flex:1,
+    borderWidth:1.5,
+    borderRadius:15,
+    padding:5,
+    margin:10,
+    marginVertical:7,
+    alignSelf:"center",
+    width:350,
+    height:100
+
+  },
+  cart2:{
+    borderRightWidth:1.5,
+    borderRadius:1,
+    marginRight:75,
+    height:50,
+    
+
+  },
+  countContainer: {
+   
+  },
   touchable:{
-    marginTop:3,
-    marginLeft:350,
-    position: "absolute",
+
     
   },
   text: {
@@ -88,15 +121,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     margin: 1,
   },
-  bookItemContainer: {
-    flexDirection: 'row',
-    padding: 5,
-    paddingLeft: 10,
-  },
-  bookTitle: {
-    fontSize: 22,
-    fontWeight: '400',
-    color: 'black',
+  cartText: {
+   
   },
 
 });
