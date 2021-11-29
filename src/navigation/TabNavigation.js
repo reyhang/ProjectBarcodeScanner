@@ -13,12 +13,25 @@ export default function TabNavigator() {
   
   return (
     <Tab.Navigator>
+       <Tab.Screen
+        name="Sepetim"
+        component={CartScreen}
+        options={{
+          tabBarIcon: () => (
+            <MatIcon name="shopping" size={23} color={colors.peachy_pluff} />
+          ),
+          headerStyle:styles.header,
+          headerTitleAlign:"center",
+          headerTintColor:colors.dark_salmon      
+        }}
+        
+      />
       <Tab.Screen
         name="Anasayfa"
         component={HomeScreen}
         options={{
           tabBarIcon: () => (
-            <IonIcon name="home" color={colors.peachy_pluff} />
+            <IonIcon name="home" color={colors.peachy_pluff} size={23} />
           ),
         }}
       />
@@ -32,19 +45,7 @@ export default function TabNavigator() {
           
         }}
       />
-      <Tab.Screen
-        name="Sepetim"
-        component={CartScreen}
-        options={{
-          tabBarIcon: () => (
-            <MatIcon name="shopping" size={23} color={colors.peachy_pluff} />
-          ),
-          headerStyle:styles.header,
-          headerTitleAlign:"center",
-          headerTintColor:colors.dark_salmon      
-        }}
-        
-      />
+     
 {/*        <Tab.Screen
         name="Ürünler"
         component={ProductScreen}

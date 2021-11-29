@@ -1,5 +1,5 @@
 import {useSelector} from 'react-redux';
-import {ADD_OR_REMOVE_CART} from './actionTypes';
+import {ADD_OR_REMOVE_CART, INCREMENT_COUNT} from './actionTypes';
 
 //item : ürünler
 
@@ -7,17 +7,13 @@ const addOrRemoveCart = ({item, cartItems, status}) => {
   let xa = [];
 
   const checkCart = cartItems.find(res => res.title === item);
-  
+
   if (status) {
     if (checkCart) {
       const filterCart = cartItems.filter(res => res.title !== item);
       xa = [
         ...filterCart,
-        {
-          id: checkCart.id,
-          count: checkCart.count + 1,
-          title: checkCart.title,
-        },
+        {title: checkCart.title, id: checkCart.id, count: checkCart.count + 1},
       ];
     } else {
       xa = [
@@ -30,8 +26,8 @@ const addOrRemoveCart = ({item, cartItems, status}) => {
       ];
     }
   } else {
-      if (checkCart.count > 1) {
-        const filterCart = cartItems.filter(res => res.title !== item);
+    if (checkCart.count > 1) {
+      const filterCart = cartItems.filter(res => res.title !== item);
       xa = [
         ...filterCart,
         {
@@ -40,15 +36,33 @@ const addOrRemoveCart = ({item, cartItems, status}) => {
           title: checkCart.title,
         },
       ];
-      } else {
-        const filterCart = cartItems.filter(res => res.title !== item);
-          xa= [...filterCart]
-      }
+    } else {
+      const filterCart = cartItems.filter(res => res.title !== item);
+      xa = [...filterCart];
+    }
   }
 
   return dispatch => dispatch({type: ADD_OR_REMOVE_CART, payload: xa});
 };
 
-export {addOrRemoveCart};
+const incrementCount = ({item, cartItems}) => {
+
+const cartFilter = cartItems.filter(res => res.title !== item.title)
+
+const  cart = [
+    ...cartFilter,
+    {
+      id:item.id,
+      title:item.title,
+      count:item.count+1
+    },
+  ]
+
+
+
+  return dispatch => dispatch({type: INCREMENT_COUNT, payload: cart});
+};
+
+export {addOrRemoveCart, incrementCount};
 
 /*  payload = State'e güncellenecek data  */

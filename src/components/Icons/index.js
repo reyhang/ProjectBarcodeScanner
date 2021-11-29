@@ -4,9 +4,9 @@ import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons"
 import { colors } from '../../constants'
 
 
-export default function IonIcon  ({name,color})  {
+export default function IonIcon  ({name,color,size,style})  {
 
-    return <Icon name={name} color={color} size={23} />
+    return <Icon name={name} color={color} size={size} style={style} />
 }
 
 const PlusIcon = ({name,onPress}) => {
