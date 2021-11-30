@@ -1,4 +1,3 @@
-import {useSelector} from 'react-redux';
 import {ADD_OR_REMOVE_CART, INCREMENT_COUNT} from './actionTypes';
 
 //item : ürünler
@@ -46,19 +45,14 @@ const addOrRemoveCart = ({item, cartItems, status}) => {
 };
 
 const incrementCount = ({item, cartItems}) => {
+  const cartFilter = cartItems.map(res => {
+    if (res.title === item.title) {
+      res.count = res.count + 1;
+    }
+    return res;
+  });
 
-const cartFilter = cartItems.filter(res => res.title !== item.title)
-
-const  cart = [
-    ...cartFilter,
-    {
-      id:item.id,
-      title:item.title,
-      count:item.count+1
-    },
-  ]
-
-
+  const cart = [...cartFilter];
 
   return dispatch => dispatch({type: INCREMENT_COUNT, payload: cart});
 };
