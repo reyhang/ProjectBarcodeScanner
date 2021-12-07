@@ -1,4 +1,8 @@
-import {ADD_OR_REMOVE_CART, INCREMENT_COUNT} from './actionTypes';
+import {
+  ADD_OR_REMOVE_CART,
+  DECREASE_COUNT,
+  INCREMENT_COUNT,
+} from './actionTypes';
 
 //item : ürünler
 
@@ -45,18 +49,36 @@ const addOrRemoveCart = ({item, cartItems, status}) => {
 };
 
 const incrementCount = ({item, cartItems}) => {
-  const cartFilter = cartItems.map(res => {
+  const mapCart = cartItems.map(res => {
     if (res.title === item.title) {
       res.count = res.count + 1;
     }
     return res;
   });
 
-  const cart = [...cartFilter];
+  const cart = [...mapCart];
 
-  return dispatch => dispatch({type: INCREMENT_COUNT, payload: cart});
+  return dispatch => dispatch({type: DECREASE_COUNT, payload: cart});
 };
 
-export {addOrRemoveCart, incrementCount};
+const decreaseCount = ({item, cartItems}) => {
+
+  if(item.count === 1) {
+  const filterCart = cartItems.filter(res => res.title !== item.title);
+  return dispatch => dispatch({type: DECREASE_COUNT, payload: filterCart});
+
+  }
+  const mapCart = cartItems.map( res=>{
+    if (res.count > 1) {
+      res.count = res.count - 1;
+    
+    }  return res
+  });
+
+  const cart = [...mapCart]
+  return dispatch => dispatch({type: DECREASE_COUNT, payload: cart});
+};
+
+export {addOrRemoveCart, incrementCount, decreaseCount};
 
 /*  payload = State'e güncellenecek data  */

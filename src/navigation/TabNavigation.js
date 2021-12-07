@@ -6,6 +6,7 @@ import CameraScreen from '../screens/CameraScreen';
 import IonIcon, { MatIcon } from '../components/Icons';
 import {colors} from '../constants';
 import { StyleSheet } from 'react-native';
+import DatabaseTestScreen from '../screens/DatabaseTestScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -13,19 +14,20 @@ export default function TabNavigator() {
   
   return (
     <Tab.Navigator>
-       <Tab.Screen
-        name="Sepetim"
-        component={CartScreen}
+         {/*  <Tab.Screen
+        name="DataTest"
+        component={DatabaseTestScreen}
         options={{
           tabBarIcon: () => (
-            <MatIcon name="shopping" size={23} color={colors.peachy_pluff} />
+            <MatIcon name="database-marker" size={23} color={colors.peachy_pluff} />
           ),
           headerStyle:styles.header,
           headerTitleAlign:"center",
           headerTintColor:colors.dark_salmon      
         }}
         
-      />
+      /> */}
+       
       <Tab.Screen
         name="Anasayfa"
         component={HomeScreen}
@@ -44,6 +46,18 @@ export default function TabNavigator() {
           ),
           
         }}
+      /><Tab.Screen
+        name="Sepetim"
+        component={CartScreen}
+        options={{
+          tabBarIcon: () => (
+            <MatIcon name="shopping" size={23} color={colors.peachy_pluff} />
+          ),
+          headerStyle:styles.header,
+          headerTitleAlign:"center",
+          headerTintColor:colors.dark_salmon      
+        }}
+        
       />
      
 {/*        <Tab.Screen

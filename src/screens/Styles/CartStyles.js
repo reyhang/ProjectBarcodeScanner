@@ -57,7 +57,8 @@ const styles =  StyleSheet.create({
       backgroundColor: "#ccc",
       height: 80,
       width: 80,
-      borderRadius: 3
+      borderRadius: 3,
+      marginTop:5
     },
     bodyContent: {
       padding: 16,
