@@ -5,7 +5,7 @@ import TabNavigator from './TabNavigation';
 export default function () {
   return (
     <NavigationContainer>
-      <TabNavigator />
+      <TabNavigator/>
     </NavigationContainer>
   );
 }

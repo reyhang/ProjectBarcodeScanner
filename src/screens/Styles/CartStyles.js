@@ -15,10 +15,10 @@ const styles =  StyleSheet.create({
   },
     container: {
       borderWidth: 1,
-      borderRadius: 5,
+      borderRadius: 10,
       borderColor: "#CCC",
       flexWrap: "nowrap",
-      backgroundColor: "rgba(255,255,255,1)",
+      backgroundColor: "rgba(255,255,255,255)",
       shadowColor: "#000",
       shadowOffset: {
         width: -2,
@@ -28,7 +28,7 @@ const styles =  StyleSheet.create({
       shadowRadius: 1.5,
       elevation: 3,
       overflow: "hidden",
-      margin:13,
+      margin:7,
       padding:3,
       width:"95%",
      height:110
@@ -42,7 +42,7 @@ const styles =  StyleSheet.create({
       borderWidth: 1,
       borderColor: "rgba(255,255,255,1)",
       borderRadius: 13,
-      backgroundColor: colors.dark_salmon
+      backgroundColor: colors.black
     },
     cardBody: {
       flexDirection: "row",
@@ -54,7 +54,6 @@ const styles =  StyleSheet.create({
       margin: 0
     },
     image: {
-      backgroundColor: "#ccc",
       height: 80,
       width: 80,
       borderRadius: 3,
@@ -62,21 +61,20 @@ const styles =  StyleSheet.create({
     },
     bodyContent: {
       padding: 16,
-      paddingTop: 24,
+      paddingTop: 10,
       flex: 1
     },
     urun: {
-      fontSize:fonts.f20,
+      fontSize:fonts.f13,
       color: "#000",
-      paddingBottom: 12
+      
     },
     urunFiyati: {
-      fontSize: fonts.f17 ,
+      fontSize: fonts.f12 ,
       color: "#000",
       lineHeight: 16,
       opacity: 0.5
     },
-    undefined: {},
     icon: {
      position:"absolute",
       color: colors.white,

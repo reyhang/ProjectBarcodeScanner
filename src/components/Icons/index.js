@@ -1,6 +1,6 @@
 import React from 'react'
 import Icon from "react-native-vector-icons/Ionicons"
-import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons"
+import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import { colors } from '../../constants'
 
 
@@ -21,7 +21,7 @@ const RemoveIcon = ({name,color}) => {
 }
 
 const MatIcon = ({name,size,color}) => {
-    return <MaterialIcon name={name} color={color} size={size} />
+    return <MaterialIcons name={name} color={color} size={size} />
 }
 
 export {PlusIcon,RemoveIcon,MatIcon}

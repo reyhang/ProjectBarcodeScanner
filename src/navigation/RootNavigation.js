@@ -1,4 +1,4 @@
-/* import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import CameraScreen from '../screens/CameraScreen';
 import CartScreen from '../screens/CartScreen';
@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 export default function StackNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Root" component={CartScreen} />
     </Stack.Navigator>
   );
-} */
+}

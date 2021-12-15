@@ -5,17 +5,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState,useEffect} from 'react';
 import {RNCamera} from 'react-native-camera';
 import {fonts, colors} from '../constants/index';
 import {useDispatch, useSelector} from 'react-redux';
 import {Switch} from 'react-native-gesture-handler';
 import {addOrRemoveCart} from "../redux/actions"
+import axios from 'axios';
 
 export default function CameraScreen() {
   /* 
   const [items, setItems] = useState([])
-const [camera, setCamera] = useState(false)
 
 
   console.log("cart",cartItems)
@@ -24,6 +24,10 @@ const handleAddData = (id)=>{
  dispatch(addToCart(id))
 }
  */
+const [camera, setCamera] = useState(false)
+
+const [items,setItems]=useState([])
+const [isLoading,setLoading]=useState(false)
 
   const dispatch = useDispatch();
 
@@ -39,6 +43,20 @@ const cartItems = useSelector(state => state.cart)
 
 const handleAddCart = item => dispatch(addOrRemoveCart({item,cartItems,status:true}));
 
+const getProducts = async () => {
+  const response = await axios.get(`http://10.0.2.2:3000/products`)
+  .then(res=>res.data).catch(e=>console.log(e))
+  setItems(response)
+
+}
+
+
+ useEffect(() => {
+     setLoading(true)
+     getProducts()
+     setLoading(false)
+ }, [])
+
   return (
     <ScrollView>
       <Text style={styles.text}> Hoş Geldiniz ! </Text>
@@ -51,15 +69,15 @@ const handleAddCart = item => dispatch(addOrRemoveCart({item,cartItems,status:tr
         }}
       />
 
-  {/* <TouchableOpacity onPress={() => setCamera(!camera)}>
+  <TouchableOpacity onPress={() => setCamera(!camera)}>
         <Text style={(styles.text, {color: colors.dark_sea_green})}>
           Kamera
         </Text>
       </TouchableOpacity> 
-  */}
+ 
       <Switch />
 
-      <RNCamera
+      {/* <RNCamera
         style={styles.camera}
         ref={ref}
         captureAudio={false}
@@ -70,7 +88,7 @@ const handleAddCart = item => dispatch(addOrRemoveCart({item,cartItems,status:tr
           buttonPositive: 'Ok',
           buttonNegative: 'Cancel',
         }}
-      />
+      /> */}
       <View>
         <Text style={[styles.text, {color: colors.dim_grey}]}>{barcode}</Text>
       </View>

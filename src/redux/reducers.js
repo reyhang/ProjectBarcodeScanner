@@ -1,34 +1,31 @@
-import {ADD_OR_REMOVE_CART, DECREASE_COUNT, INCREMENT_COUNT} from './actionTypes';
+import {CREATE_CART, GET_CART, ADD_CART_ITEMS} from './actionTypes';
 
 const initialState = {
-  cart: [
-  {id:1,title:'Meyve',count:1,img:"https://www.cagri.com/Uploads/UrunResimleri/buyuk/cilek-kg-86dd.jpg"},
-  {id:2,title:'Sebze',count:1,img:"https://reimg-carrefour.mncdn.com/mnresize/600/600/productimage/30013008/30013008_0_MC/8814444511282_1560925387535.jpg"}
-  ],
+  cart: {},
   product: [],
 };
 
-
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_OR_REMOVE_CART:
+    case CREATE_CART:
       return {
         ...state,
-        cart:action.payload};
-     
-    case INCREMENT_COUNT:
+        cart: action.payload,
+      };
+
+    case GET_CART:
       return {
         ...state,
-        cart:action.payload
-      }
-      
-    case DECREASE_COUNT:
+        cart: action.payload,
+      };
+
+    case ADD_CART_ITEMS:
       return {
         ...state,
-        cart:action.payload
-      } 
+        cart: action.payload,
+      };
   }
-  return state
+  return state;
 };
 
 export default productReducer;
