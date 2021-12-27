@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, FlatList, Button} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {colors} from '../constants';
-import { createCart } from '../redux/actions';
+import { addCartItems, createCart, getCart } from '../redux/actions';
 
 
 export default function DatabaseTestScreen({navigation}) {
@@ -13,6 +13,17 @@ export default function DatabaseTestScreen({navigation}) {
   const dispatch = useDispatch();
 
   const createCarts = async () => await dispatch(createCart());
+
+  const addToCart = (id) => {
+
+    const response = axios.post(`http://10.0.2.2:3000/cart/items/${id}`)
+    .then(res=>{
+      console.log(res);
+    }).catch(e => console.log(e))
+   
+  };
+  
+
 
   FlatListItemSeparator = () => {
     return (
@@ -34,6 +45,10 @@ export default function DatabaseTestScreen({navigation}) {
 
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <Button title="Sepet oluştur" onPress={() => createCarts()} />
+      </View>
+
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Button title="Sepete ekle" onPress={() => addToCart()} />
       </View>
     </View>
   );

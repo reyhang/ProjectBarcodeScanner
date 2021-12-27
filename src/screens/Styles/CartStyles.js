@@ -79,14 +79,14 @@ const styles =  StyleSheet.create({
      position:"absolute",
       color: colors.white,
       fontSize: 30,
-      right: 0,
+      right:2,
       top: 5
     },
     icon2: {
       position:"absolute",
       color:colors.white ,
       fontSize: 30,
-      right:0,
+      right:2,
       top: 70,
     },
     adet: {

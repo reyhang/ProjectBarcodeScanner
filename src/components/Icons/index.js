@@ -20,8 +20,8 @@ const RemoveIcon = ({name,color}) => {
 
 }
 
-const MatIcon = ({name,size,color}) => {
-    return <MaterialIcons name={name} color={color} size={size} />
+const MatIcon = ({name,size,color,onPress}) => {
+    return <MaterialIcons name={name} color={color} size={size} onPress={onPress} />
 }
 
 export {PlusIcon,RemoveIcon,MatIcon}

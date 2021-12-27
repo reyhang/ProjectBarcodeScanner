@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {CREATE_CART, GET_CART} from './actionTypes';
+import {CREATE_CART, GET_CART,ADD_CART_ITEMS} from './actionTypes';
 
 const createCart = async () => {
   const response = await axios
@@ -20,12 +20,12 @@ const getCart = () => {
   };
 };
 
-const addCartItems = () => {
+const addCartItems = (id) => {
   return async dispatch => {
     return axios
-      .post(`http://10.0.2.2:3000/cart`, null, {params: {memberId: 8}})
+      .post(`http://10.0.2.2:3000/cart/items/${id}`)
       .then(res => {
-        dispatch({type: ADD_CART_ITEMS, payload: response});
+        dispatch({type: ADD_CART_ITEMS, payload: res.data});
       })
       .catch(e => console.log(e));
   };

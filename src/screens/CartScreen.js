@@ -9,6 +9,7 @@ import axios from 'axios';
 import {getCart, createCart} from '../redux/actions';
 import { MatIcon } from '../components/Icons';
 import { colors } from '../constants';
+import { RNCamera } from 'react-native-camera';
 
 export default function CartScreen({navigation}) {
 
@@ -33,101 +34,77 @@ export default function CartScreen({navigation}) {
       getCarts();
     })
     .catch(e => console.log(e))
-    
+  }  
 
     
-  }
-
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       getCarts();
     });
 
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation]);  
+
+
 
   return (
     <SafeAreaView>
       <View>
-        {cart?.id ? cart.itemCount > 0 ?
-        <FlatList
-        data={cart.items}
-        renderItem={({item}) => (
-          <View style={styles.container}>
-            <Center vertical>
-              <View
-                gradientImage="Gradient_oQwIoTW.png"
-                style={styles.rect}></View>
-            </Center>
-            <View style={styles.cardBody}>
-              <Image
-                source={{ uri:item.productId.imageUrl
-                }}
-                style={styles.image}></Image>
+        {cart?.id ? (
+          cart.itemCount > 0 ? (
+            <FlatList
+              data={cart.items}
+              renderItem={({item}) => (
+                <View style={styles.container}>
+                  <Center vertical>
+                    <View
+                      gradientImage="Gradient_oQwIoTW.png"
+                      style={styles.rect}></View>
+                  </Center>
+                 
+                  <View style={styles.cardBody}>
+                    <IoniconsIcon
+                      name="ios-remove-circle"
+                      size={25}
+                      style={{color: 'tomato'}}
+                    />
+                    <Image
+                      source={{uri: item.productId.imageUrl}}
+                      style={styles.image}></Image>
+                       
 
-              <View style={styles.bodyContent}>
-                <Text style={styles.urun}>{item.productId.title}</Text>
-                <Text style={styles.urunFiyati}>{item.productId.price}$</Text>
-              </View>
-            </View>
-            <View style={styles.undefined}></View>
-            <IoniconsIcon
-              name="ios-add-circle"
-              style={styles.icon}
-              onPress={() => incDecProduct(item.id,true)}
-            />
-            <IoniconsIcon
-              name="ios-remove-circle"
-              style={styles.icon2}
-              onPress={() => incDecProduct(item.id,false)}
-            />
-            <Text style={styles.adet}>{item.count}</Text>
-          </View>
-        )}
-        keyExtractor={item => item.id}
-      />
-         : <View style={styles.noCart}>
-          <MatIcon name="shopping" size={50} color={colors.light_grey} />
-          <Text>Sepetinizde Ürün Bulunmamaktadır.</Text>
-        </View> : <Text>Sepet Oluşturun..</Text>}
-        
-      </View>
-
-      {/*  */}
-
-      {/*  <FlatList
-          showsVerticalScrollIndicator={false}
-          data={items}
-          keyExtractor={dataSource => dataSource.id}
-          renderItem={({item}) => (
-            <View style={styles.container}>
-              <Center vertical>
-                <View
-                  gradientImage="Gradient_oQwIoTW.png"
-                  style={styles.rect}></View>
-              </Center>
-              <View style={styles.cardBody}>
-               <Image source={{uri: item.img}} style={styles.image}></Image>
-                <View style={styles.bodyContent}>
-                  <Text style={styles.urun}>sad</Text>
-                  <Text style={styles.urunFiyati}>10$</Text>
+                    <View style={styles.bodyContent}>
+                      <Text style={styles.urun}>{item.productId.title}</Text>
+                      <Text style={styles.urunFiyati}>
+                        {item.productId.price}$
+                      </Text>
+                    </View>
+                  </View>
+                  <IoniconsIcon
+                    name="ios-add-circle"
+                    style={styles.icon}
+                    onPress={() => incDecProduct(item.id, true)}
+                  />
+                  <IoniconsIcon
+                    name="ios-remove-circle"
+                    style={styles.icon2}
+                    onPress={() => incDecProduct(item.id, false)}
+                  />
+                  <Text style={styles.adet}>{item.count}</Text>
                 </View>
-              </View>
-              <View style={styles.undefined}></View>
-              <IoniconsIcon
-                name="ios-add-circle"
-                style={styles.icon}
-                onPress={() => handleIncrementCount(item)}
-              />
-              <IoniconsIcon
-                name="ios-remove-circle"
-                style={styles.icon2}
-                onPress={() => handleDecreaseCount(item)}
-              />
-              <Text style={styles.adet}>12</Text>
+              )}
+              keyExtractor={item => item.id}
+            />
+          ) : (
+            <View style={styles.noCart}>
+              <MatIcon name="shopping" size={50} color={colors.light_grey} />
+              <Text>Sepetinizde Ürün Bulunmamaktadır.</Text>
             </View>
-          )}
-        /> */}
+          )
+        ) : (
+          <Text>Sepet Oluşturun..</Text>
+        )}
+      </View>
     </SafeAreaView>
   );
 }

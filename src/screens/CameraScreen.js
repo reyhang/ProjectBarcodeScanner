@@ -1,4 +1,6 @@
 import {
+  Alert,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,6 +14,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Switch} from 'react-native-gesture-handler';
 import {addOrRemoveCart} from "../redux/actions"
 import axios from 'axios';
+import { Card, Paragraph } from 'react-native-paper';
 
 export default function CameraScreen() {
   /* 
@@ -24,6 +27,10 @@ const handleAddData = (id)=>{
  dispatch(addToCart(id))
 }
  */
+
+const cart = useSelector(state => state.cart)
+
+
 const [camera, setCamera] = useState(false)
 
 const [items,setItems]=useState([])
@@ -31,24 +38,42 @@ const [isLoading,setLoading]=useState(false)
 
   const dispatch = useDispatch();
 
-  const [barcode, setBarcode] = useState('');
+  const [barcode, setBarcode] = useState({});
 
   const ref = useRef();
 
   const handleSetBarcode = data => {
-    setBarcode(data);
+    const response = axios
+      .get(`http://10.0.2.2:3000/products/barcode/${data}`)
+      .then(res => {
+        setBarcode(res.data);
+      })
+      .catch(e => console.log(e));
   };
 
 const cartItems = useSelector(state => state.cart)
 
-const handleAddCart = item => dispatch(addOrRemoveCart({item,cartItems,status:true}));
+const handleAddCart = () => {
+
+  if(!barcode || !cart.id) {
+    return Alert.alert("Sepet veya Ürün yok.")
+  }
+  const response = axios.post(`http://10.0.2.2:3000/cart/items/${cart.id}`,{
+      barcode:barcode.barcode
+  })
+  .then(() => Alert.alert("Response Post"))
+  .catch(e => console.log(e))
+}
 
 const getProducts = async () => {
   const response = await axios.get(`http://10.0.2.2:3000/products`)
   .then(res=>res.data).catch(e=>console.log(e))
   setItems(response)
-
 }
+
+
+
+
 
 
  useEffect(() => {
@@ -69,15 +94,15 @@ const getProducts = async () => {
         }}
       />
 
-  <TouchableOpacity onPress={() => setCamera(!camera)}>
+      {/* <TouchableOpacity onPress={() => setCamera(!camera)}>
         <Text style={(styles.text, {color: colors.dark_sea_green})}>
           Kamera
         </Text>
-      </TouchableOpacity> 
- 
-      <Switch />
+      </TouchableOpacity>
 
-      {/* <RNCamera
+      <Switch /> */}
+
+      <RNCamera
         style={styles.camera}
         ref={ref}
         captureAudio={false}
@@ -88,13 +113,32 @@ const getProducts = async () => {
           buttonPositive: 'Ok',
           buttonNegative: 'Cancel',
         }}
-      /> */}
+      />
+
       <View>
-        <Text style={[styles.text, {color: colors.dim_grey}]}>{barcode}</Text>
+      <Card style={{borderWidth:2,margin:20,borderColor:colors.light_blue,borderRadius:15,width:300,alignSelf:"center"}}>
+          <Card.Content>
+            <Card.Cover style={styles.image} source={{uri: barcode?.imageUrl}}>
+
+            </Card.Cover>
+            
+            <Paragraph style={[styles.text, {color: colors.dim_grey}]}>
+                        {barcode.ti8690565005163tle ? barcode.title : null}
+
+            </Paragraph>
+          </Card.Content>
+          <Image  />
+        <Text >
+        </Text> 
+        </Card>
+      {/*   <Image style={styles.image} source={{uri: barcode?.imageUrl}} />
+        <Text style={[styles.text, {color: colors.dim_grey}]}>
+          {barcode.title ? barcode.title : null}
+        </Text> */}
       </View>
 
       <View style={styles.touchableContainer}>
-        <TouchableOpacity onPress={() => handleAddCart(barcode)}>
+        <TouchableOpacity onPress={() => handleAddCart(barcode.barcode)}>
           <Text style={(styles.text, {color: colors.dark_sea_green})}>
             Ürünü Sepete Ekle
           </Text>
@@ -141,5 +185,11 @@ const styles = StyleSheet.create({
     minHeight: 50,
     alignSelf: 'center',
     alignItems: 'flex-start',
+  },
+  image: {
+    height: 80,
+    width: 80,
+    borderRadius: 3,
+    marginTop:5
   },
 });

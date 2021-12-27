@@ -14,6 +14,7 @@ const productReducer = (state = initialState, action) => {
       };
 
     case GET_CART:
+      console.log(action.payload);
       return {
         ...state,
         cart: action.payload,

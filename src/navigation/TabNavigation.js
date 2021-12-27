@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 export default function TabNavigator() {
   
   return (
-    <Tab.Navigator sceneContainerStyle={{backgroundColor:colors.white}} >
+    <Tab.Navigator sceneContainerStyle={{backgroundColor:colors.white,borderWidth:1,borderColor:colors.gainsboro}} >
           <Tab.Screen
         name="DataTest"
         component={DatabaseTestScreen}
@@ -23,8 +23,10 @@ export default function TabNavigator() {
           ),
           headerStyle:styles.header,
           headerTitleAlign:"center",
-          headerTintColor:colors.dark_salmon      
+          headerTintColor:colors.dark_salmon,
+         
         }}
+        
         
       />
        
