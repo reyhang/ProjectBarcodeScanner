@@ -1,15 +1,42 @@
 import {createStackNavigator} from '@react-navigation/stack';
+import { useSelector } from 'react-redux';
 import React from 'react';
-import CameraScreen from '../screens/CameraScreen';
-import CartScreen from '../screens/CartScreen';
-import HomeScreen from '../screens/HomeScreen';
+import LoginScreen from '../screens/LoginScreen';
+import HomeScreen from "../navigation/TabNavigation"
+
+
+export const AppScreen = {
+  login: 'Login',
+  home: 'Home',
+};
 
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
+
+  const isLogin = useSelector(state => state.isLogin)
+  
+  const initialRoute = isLogin ? AppScreen.home : AppScreen.login;
+
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Root" component={CartScreen} />
+    <Stack.Navigator initialRouteName={initialRoute}>
+      {isLogin ? (
+        <Stack.Screen
+          name={AppScreen.home}
+          component={HomeScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+      ) : (
+        <Stack.Screen
+          name={AppScreen.login}
+          component={LoginScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+      )}
     </Stack.Navigator>
   );
 }

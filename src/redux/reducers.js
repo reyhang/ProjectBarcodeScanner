@@ -1,8 +1,9 @@
-import {CREATE_CART, GET_CART, ADD_CART_ITEMS} from './actionTypes';
+import {CREATE_CART, GET_CART, ADD_CART_ITEMS, USER_LOGIN} from './actionTypes';
 
 const initialState = {
   cart: {},
   product: [],
+  isLogin:false
 };
 
 const productReducer = (state = initialState, action) => {
@@ -25,7 +26,15 @@ const productReducer = (state = initialState, action) => {
         ...state,
         cart: action.payload,
       };
+
+    case USER_LOGIN:
+      return {
+        ...state,
+        ...action.payload,
+        isLogin:true,
+      }
   }
+
   return state;
 };
 

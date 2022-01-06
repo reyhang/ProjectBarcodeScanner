@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {CREATE_CART, GET_CART,ADD_CART_ITEMS} from './actionTypes';
+import {CREATE_CART, GET_CART,ADD_CART_ITEMS, USER_LOGIN} from './actionTypes';
 
 const createCart = async () => {
   const response = await axios
@@ -30,6 +30,16 @@ const addCartItems = (id) => {
       .catch(e => console.log(e));
   };
 };
+
+const login = () => {
+  return async dispatch => {
+    return axios
+    .post("http://10.0.2.2:3000/login")
+    .then(res => dispatch({type:USER_LOGIN,payload: res.data}))
+  }
+}
+
+
 
 export {createCart, getCart, addCartItems};
 

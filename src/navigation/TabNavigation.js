@@ -7,6 +7,7 @@ import IonIcon, { MatIcon } from '../components/Icons';
 import {colors} from '../constants';
 import { StyleSheet } from 'react-native';
 import DatabaseTestScreen from '../screens/DatabaseTestScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -62,7 +63,6 @@ export default function TabNavigator() {
         }}
         
       />
-
     </Tab.Navigator>
   );
 }
